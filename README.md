@@ -1,29 +1,29 @@
 # bible-similarity
 
-a quick and dirty proof of concept repo for experimenting with text reuse detetection of biblical references using chroma vector database
+A quick and dirty proof of concept repo for experimenting with text reuse detection of biblical references using [Chroma - the open-source embedding database](https://github.com/chroma-core/chroma)
 
-## data source
+## Data source
 
-bible data is taken from https://github.com/LukeSmithxyz/vul
+Bible data is taken from https://github.com/LukeSmithxyz/vul
 
-## scripts
+## Scripts
 
 ### Indexing
+
+Needs to be run one time only (I guess it will throw errors running it the second time, because collection and documents already exist).
+Takes about 15 minutes to populate a chroma-db index with the Vulgata bible text
 
 ```shell
 uv run index_bible.py
 ```
 
-takes about 15 minutes to populate a chroma-db index with the vulgata bible text
-
-### Qurying
+### Querying
 ```shell
 uv run query.py "Et factum est vespere et mane, dies quintus."
 ```
 returns
 ```
 ############
-
 best matches for query:
 Et factum est vespere et mane, dies quintus.
 
