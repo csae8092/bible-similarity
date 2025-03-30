@@ -21,7 +21,7 @@ takes about 15 minutes to populate a chroma-db index with the vulgata bible text
 uv run query.py "Et factum est vespere et mane, dies quintus."
 ```
 returns
-```shell
+```
 ############
 
 best matches for query:
