@@ -41,3 +41,10 @@ uv run find_bible_refs.py
 ```
 
 The result is written into [result.json](result.json)
+
+
+### sentence_splitter
+
+```shell
+uv run -- spacy download xx_ent_wiki_sm
+```
