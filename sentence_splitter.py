@@ -2,11 +2,14 @@ import os
 import json
 import requests
 import spacy
+import re
 
 from collections import defaultdict
 from tqdm import tqdm
 
-nlp = spacy.load("it_core_news_sm")
+nlp = spacy.load("en_core_web_sm")
+page_pattern = re.compile(r"p\.\s*\d+[A-D]\s*\|")
+parentheses_pattern = re.compile(r'\([^)]*\)')
 
 url = "https://raw.githubusercontent.com/jerusalem-70-ad/jad-baserow-dump/refs/heads/main/json_dumps/occurrences.json"
 data = requests.get(url).json()
@@ -22,7 +25,11 @@ for key, value in tqdm(data.items()):
     occ_id = key
     text = value["text_paragraph"]
     if text:
-        doc = nlp(text)
+        # Remove page markers and parentheses content before processing
+        cleaned_text = page_pattern.sub('', text)
+        cleaned_text = parentheses_pattern.sub('', cleaned_text)
+        cleaned_text = cleaned_text.replace("«", '').replace("»", '').replace("|", "")
+        doc = nlp(cleaned_text)
         for sent in doc.sents:
             cur_text = sent.text
             d[occ_id].append(cur_text.strip())

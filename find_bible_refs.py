@@ -25,7 +25,8 @@ for key, value in tqdm(data.items()):
         results = collection.query(query_texts=[text], n_results=1)
         x["match"] = {
             "id": results["ids"][0][0],
-            "bible_text": results["documents"][0][0]
+            "bible_text": results["documents"][0][0],
+            "score": results["distances"][0][0]
         }
 
 with open("result.json", "w", encoding="utf-8") as fp:
