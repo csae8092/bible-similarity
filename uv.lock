@@ -125,6 +125,7 @@ dependencies = [
     { name = "flake8" },
     { name = "ipykernel" },
     { name = "pandas" },
+    { name = "requests" },
     { name = "tqdm" },
 ]
 
@@ -135,6 +136,7 @@ requires-dist = [
     { name = "flake8", specifier = ">=7.2.0" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "pandas" },
+    { name = "requests", specifier = ">=2.32.3" },
     { name = "tqdm", specifier = ">=4.67.1" },
 ]
 

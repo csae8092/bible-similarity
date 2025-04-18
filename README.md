@@ -32,3 +32,12 @@ Gen, 1, 1, 19: Et factum est vespere et mane, dies quartus.
 Gen, 1, 1, 13: Et factum est vespere et mane, dies tertius.
 ############
 ```
+
+### JAD
+
+For matching parts of passages from the JAD project which have already been identified by LLMs beeing a bible quote, run 
+```shell
+uv run find_bible_refs.py
+```
+
+The result is written into [result.json](result.json)
