@@ -6,7 +6,7 @@ import spacy
 from collections import defaultdict
 from tqdm import tqdm
 
-nlp = spacy.load("de_core_news_sm")
+nlp = spacy.load("it_core_news_sm")
 
 url = "https://raw.githubusercontent.com/jerusalem-70-ad/jad-baserow-dump/refs/heads/main/json_dumps/occurrences.json"
 data = requests.get(url).json()
