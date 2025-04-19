@@ -3,9 +3,13 @@ import json
 import requests
 import spacy
 import re
-
+import chromadb
 from collections import defaultdict
 from tqdm import tqdm
+
+chroma_db = os.path.join("chroma_data")
+chroma_client = chromadb.PersistentClient(path=chroma_db)
+collection = chroma_client.get_collection(name="vulgata")
 
 nlp = spacy.load("en_core_web_sm")
 page_pattern = re.compile(r"p\.\s*\d+[A-D]\s*\|")
@@ -32,7 +36,17 @@ for key, value in tqdm(data.items()):
         doc = nlp(cleaned_text)
         for sent in doc.sents:
             cur_text = sent.text
-            d[occ_id].append(cur_text.strip())
+            item = {
+                "text": cur_text
+            }
+            results = collection.query(query_texts=[cur_text], n_results=1)
+            item["match"] = {
+                "id": results["ids"][0][0],
+                "bible_text": results["documents"][0][0],
+                "score": results["distances"][0][0]
+            }
+            d[occ_id].append(item)
+
 
 with open("sentences.json", "w", encoding="utf-8") as fp:
     json.dump(d, fp, ensure_ascii=False, indent=2)
