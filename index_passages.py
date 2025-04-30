@@ -33,11 +33,15 @@ for key, x in data.items():
         ids.append(key)
 
 # Add documents with progress bar
-batch_size = 100
+batch_size = 20
 for i in tqdm(range(0, len(docs), batch_size)):
     batch_docs = docs[i:i + batch_size]
     batch_ids = ids[i:i + batch_size]
-    collection.add(
-        documents=batch_docs,
-        ids=batch_ids
-    )
+    try:
+        collection.add(
+            documents=batch_docs,
+            ids=batch_ids
+        )
+    except:  # noqa:
+        continue
+print("done")
