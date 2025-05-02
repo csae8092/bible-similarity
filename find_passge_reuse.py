@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import chromadb
 import pandas as pd
 
@@ -43,8 +45,24 @@ for i in range(len(ids)):
 
 # Create DataFrame
 df = pd.DataFrame(rows)
-df.to_csv("similar_texts.csv", index=False)
+
+# count matches
+data = defaultdict(list)
+for i, row in df.iterrows():
+    jad_id = row["id"]
+    sim_text = row["similar_ids"]
+    for x in sim_text:
+        data[x].append(jad_id)
+
+new_data = {}
+for key, value in data.items():
+    new_data[key] = {
+        "items": value,
+        "n": len(value)
+    }
+df['match_count'] = df['id'].map(lambda x: new_data.get(x, {'n': 0})['n'])
+df_sorted = df.sort_values(["match_count"], ascending=False)
+df_sorted.to_csv("similar_texts.csv", index=False)
 
 # Optional: inspect
-print(df.head())
-print(results)
+print(df_sorted.head())
